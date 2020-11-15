@@ -140,6 +140,41 @@ delete(m, somekey)
 
 - Go automatically handles conversion between values and pointers for method calls
 
+```
+type Circle struct {
+ x, y, r float64
+}
+func circleArea(c *Circle) float64 {
+ return math.Pi * c.r*c.r
+}
+func (c *Circle) area() float64 {
+ return math.Pi * c.r*c.r
+}
+c := Circle{0, 0, 5}
+fmt.Println(circleArea(&c))
+fmt.Println(c.area()) //(Go automatically knows to pass a pointer to the circle for this method
+
+```
+- embedded types
+is-a relationship
+```
+type Person struct {
+ Name string
+}
+func (p *Person) Talk() {
+ fmt.Println("Hi, my name is", p.Name)
+}
+type Android struct {
+ Person
+ Model string
+}
+a := new(Android)
+a.Person.Talk()
+a.Talk()
+```
+### Interfaces
+- focus more on the behavior of your program than on a taxonomy of types
+
 ### **formatting print**
 
 %v, %T, %x, %q, %s
@@ -166,8 +201,25 @@ whatAmI := func(i interface{}) {
         }
     }
 ```
-
-### **closures**
+### functional programming
+- **closures**
+```
+func makeEvenGenerator() func() uint {
+ i := uint(0)
+ return func() (ret uint) {
+ ret = i
+ i += 2
+ return
+ }
+}
+func main() {
+ nextEven := makeEvenGenerator()
+ fmt.Println(nextEven()) // 0
+ fmt.Println(nextEven()) // 2
+ fmt.Println(nextEven()) // 4
+}
+```
+- **recursion**
 
 ### **compare**
 
@@ -180,7 +232,7 @@ comparable types are boolean, numeric, string, **pointer**, **channel**, and **i
 
 ```
 var perr *os.PathError
-if errors.As(err, &perr) {
+if errors.As(err, perr) {
 	fmt.Println(perr.Path)
 }
 ```
@@ -196,10 +248,56 @@ type error interface {
     Error() string
 }
 ```
+### defer, panic
+• keeps Close call near Open call
+• If function had multiple return statements Close will happen before both of them.
+• Deferred functions are run even if a runtime panic occurs.
 
+### miscs
+- slice append understand
+- arguments were always copied in go
+- package speed up the compiler by only requiring recompilation of smaller chunks of a
+program.
+- godoc
+godoc -http=":6060"
+go doc <package> <method>
 
-### ????
-slice append understand
+### packages
+- fmt
+```
+var input string
+fmt.Scanln(&input)
+```
+- strings
+```
+strcov.Itoa(s string) int, Error
+strconv.Atoi(int) string
+strings.count(s1, s2 string) int
+strings.HasPrefix(s1, s2 string) bool
+strings.HasSuffix(s1, s2 string) bool
+strings.Index(s1, s2 string) int
+strings.Join(arr []string, delimiter string) string
+strings.Split("a-b-c-d-e", "-")
+strings.Replace("aaaa", "a", "b", 2) //bbaa, use -1 to replace all occurences
+strings.ToLower("TEST")
+strings.ToUpper("test")
+strings.Repeat("a", 5)
+```
+- io package
+- RPC, **http**, tcp, flag
+```
+var buf bytes.Buffer
+buf.Write([]byte("test"))
+```
+- create our own
+import (full path, not worrying about naming collisions)
+package name matches the folder they fall in (mostly)
+
+### unit test
+
+### resources
+- https://golang.org/src/
+
 
 
 
