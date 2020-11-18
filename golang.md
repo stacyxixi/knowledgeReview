@@ -2,35 +2,36 @@ concurrency baked-in
 
 ### **Basic types**
 #### ***Numbers***
-uint8       the set of all unsigned  8-bit integers (0 to 255)
-uint16      the set of all unsigned 16-bit integers (0 to 65535)
-uint32      the set of all unsigned 32-bit integers (0 to 4294967295)
-uint64      the set of all unsigned 64-bit integers (0 to 18446744073709551615)
+- uint8       the set of all unsigned  8-bit integers (0 to 255)
+- uint16      the set of all unsigned 16-bit integers (0 to 65535)
+- uint32      the set of all unsigned 32-bit integers (0 to 4294967295)
+- uint64      the set of all unsigned 64-bit integers (0 to 18446744073709551615)
 
-int8        the set of all signed  8-bit integers (-128 to 127)
-int16       the set of all signed 16-bit integers (-32768 to 32767)
-int32       the set of all signed 32-bit integers (-2147483648 to 2147483647)
-int64       the set of all signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
+- int8        the set of all signed  8-bit integers (-128 to 127)
+- int16       the set of all signed 16-bit integers (-32768 to 32767)
+- int32       the set of all signed 32-bit integers (-2147483648 to 2147483647)
+- int64       the set of all signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
 
-float32     the set of all IEEE-754 32-bit floating-point numbers
-float64     the set of all IEEE-754 64-bit floating-point numbers
+- float32     the set of all IEEE-754 32-bit floating-point numbers
+- float64     the set of all IEEE-754 64-bit floating-point numbers
 
-complex64   the set of all complex numbers with float32 real and imaginary parts
-complex128  the set of all complex numbers with float64 real and imaginary parts
+- complex64   the set of all complex numbers with float32 real and imaginary parts
+- complex128  the set of all complex numbers with float64 real and imaginary parts
 
-byte        alias for uint8
-rune        alias for int32 (code point)
+- byte        alias for uint8
+- rune        alias for int32 (code point)
 
-uint     either 32 or 64 bits
-int      same size as uint
-uintptr  an unsigned integer large enough to store the uninterpreted bits of a pointer value
+- uint     either 32 or 64 bits
+- int      same size as uint
+- uintptr  an unsigned integer large enough to store the uninterpreted bits of a pointer value
 
-#### **Strings**
+#### ***Strings***
 - string: a read-only slice of bytes, a string holds arbitrary bytes
 
 - To summarize, strings can contain arbitrary bytes, but when constructed from string literals, those bytes are (almost always) UTF-8.
 
-- for range loop, by contrast, decodes one UTF-8-encoded rune on each iteration.Index string yield bytes.
+- Index string yield bytes
+- for range loop, by contrast, decodes one UTF-8-encoded rune on each iteration.
 
 ```
 	const sample = "\xbd\xb2\x3d\xbc\x20\xe2\x8c\x98"
@@ -72,8 +73,10 @@ uintptr  an unsigned integer large enough to store the uninterpreted bits of a p
 - growing an slice: create a new, larger one; 
 ```
 func copy(dst, src []T) int
-x := make([]int, 4, 7)
+x := make([]int, 4, 7) //cap(x)=7, len(x)=4
+y := make([]int, 5)
 x = x[:cap(x)]
+
 
 func Filter(s []int, fn func(int) bool) []int {
     var p []int // == nil
@@ -84,8 +87,9 @@ func Filter(s []int, fn func(int) bool) []int {
     }
     return p
 }
-#re-slicing a slice doesn't make a copy of the underlying array. The full array will be kept in memory until it is no longer referenced
-
+```
+- re-slicing a slice doesn't make a copy of the underlying array. The full array will be kept in memory until it is no longer referenced
+```
 func CopyDigits(filename string) []byte {
     b, _ := ioutil.ReadFile(filename)
     b = digitRegexp.Find(b)
@@ -249,9 +253,9 @@ type error interface {
 }
 ```
 ### defer, panic
-• keeps Close call near Open call
-• If function had multiple return statements Close will happen before both of them.
-• Deferred functions are run even if a runtime panic occurs.
+- keeps Close call near Open call
+- If function had multiple return statements Close will happen before both of them.
+- Deferred functions are run even if a runtime panic occurs.
 
 ### miscs
 - slice append understand
@@ -259,8 +263,10 @@ type error interface {
 - package speed up the compiler by only requiring recompilation of smaller chunks of a
 program.
 - godoc
-godoc -http=":6060"
+```
+godoc -http=":6060"```
 go doc <package> <method>
+godoc -http=":6060"```
 
 ### packages
 - fmt
