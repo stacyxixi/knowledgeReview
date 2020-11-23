@@ -18,4 +18,6 @@ kubectl get pv
 kubectl get pvc
 kubectl create secret generic(docker-registry, tls) <secrect-name> --from-literal <key>=<value>
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.0/deploy/static/provider/cloud/deploy.yaml
+kubectl create serviceaccount --namespace kube-system <some account>
+kubectl create clusterolebinding <some role> -clusterrole=cluster-admin serviceaccount=kube-system:<some account>
 ```

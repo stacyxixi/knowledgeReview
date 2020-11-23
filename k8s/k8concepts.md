@@ -69,7 +69,12 @@ selector (based on keyvalue pairs under labels, completely arbitory)
 - imperative command
 - securely store a piece of information in the cluster, needs to be created manually
 - secret can store many key-value pairs
-- valueFrom: secretKeyRef: name: 
+- valueFrom: secretKeyRef: name: key:
+
+### google cloud
+- User accounts, service account
+- ClusterRoleBinding(across the entire cluster), RoleBinding (namespace)
+
 
 
 
